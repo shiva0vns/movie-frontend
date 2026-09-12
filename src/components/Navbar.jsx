@@ -21,7 +21,6 @@ function NavBar(){
             {isLoggedIn() ? (
                 <>
                 <Link to="/" className="nav-link">Home</Link>
-                <span>{favLength}</span>
                 <Link to="/favorites" className="nav-link">❤️</Link>
                 <span>{user?.name}</span>
                 <button onClick={handleLogout} className="nav-link">Logout</button>
