@@ -1,0 +1,23 @@
+// const API_KEY="6dd20851c21bb236f68ba3bca8e6f098"
+// const BASE_URL="https://api.themoviedb.org/3";
+export const getPopularMovie= async ()=>{
+    // const response=await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
+    const response=await fetch(`http://localhost:8080/api/movies`);
+    const data= await response.json();
+    // console.log(data.results);
+    return data;
+};
+
+export const searchMovies = async (query) => {
+    const response = await fetch(
+        `http://localhost:8080/api/movies/search?title=${encodeURIComponent(query)}`
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to search movies");
+    }
+
+    return await response.json();
+};
+
+    
