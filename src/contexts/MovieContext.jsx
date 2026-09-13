@@ -4,6 +4,7 @@ import {
   useEffect,
   useContext
 } from "react";
+import { favoriteMovie } from "../service/api";
 
 const MovieContext = createContext();
 
@@ -29,6 +30,10 @@ export const MovieProvider =
             }
             return [...prev,movie];
           });
+          favoriteMovie(movie.id).catch((err) => {
+            console.error("Could not sync favorite with backend:", err.message);
+          });
+  
     };
 
     const removeFavorites =(movieId) =>{
