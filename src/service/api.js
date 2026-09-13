@@ -29,4 +29,18 @@ export const searchMovies = async (query) => {
     return await response.json();
 };
 
+export const favoriteMovie = async (movieId) => {
+    const response = await fetch(`http://localhost:8080/api/movies/${movieId}/favorite`, {
+        method: "POST",
+        headers: authHeaders(),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to mark movie as favorite");
+    }
+
+    return await response.text(); // backend returns a plain string message
+};
+
+
     
