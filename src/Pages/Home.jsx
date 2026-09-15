@@ -3,6 +3,7 @@ import { useState, useEffect,useMemo } from "react";
 import "../css/Home.css";
 import { useMovieContext } from "../contexts/MovieContext";
 import { searchMovies, getPopularMovie } from "../service/api";
+import { useAuth } from "../contexts/AuthContext";
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,6 +12,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [sortBy,setSortBy]=useState("default");
   const { favorites } = useMovieContext();
+  const {logoutUser}=useAuth();
 
   const sortedMovies = useMemo(() => {
 
@@ -69,7 +71,12 @@ function Home() {
         const popularMovies = await getPopularMovie();
         setMovies(popularMovies);
       } catch (err) {
+        if(err.message==="UNAUTHORIZED"){
+          logoutUser()
+          navigate("/login")
+        }else{
         console.log(err);
+        }
         setError("Failed to load the movies......");
       } finally {
         setLoading(false);
