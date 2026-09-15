@@ -10,6 +10,9 @@ export const getPopularMovie= async ()=>{
     const response=await fetch(`http://localhost:8080/api/movies`,{
         headers:authHeaders(),
     });
+    if (response.status == 401 || response.status == 403) {
+        throw new Error("UNAUTHORIZED");
+      }    
     if(!response.ok){
         throw new Error("Failed to load movies");
     }
@@ -22,6 +25,7 @@ export const searchMovies = async (query) => {
     const response = await fetch(
         `http://localhost:8080/api/movies/search?title=${encodeURIComponent(query)}`,{
             headers:authHeaders()});
+              
     if (!response.ok) {
         throw new Error("Failed to search movies");
     }
